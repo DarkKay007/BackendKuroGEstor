@@ -4,7 +4,6 @@ import cors from 'cors';
 const app = express();
 const express = require('express');
 const cors = require('cors');
-const app = express();
 
 const allowedOrigins = ['https://front-end-gestor-vercel.vercel.app'];
 
