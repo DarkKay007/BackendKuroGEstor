@@ -32,12 +32,11 @@ export const getTask = async (req, res) => {
 
 export const postTask = async (req, res) => {
   const { nombre, descripcion, estado, fecha_limite, proyecto_nombre } = req.body;
-  const date_create = getCurrentDateTime();
 
   try {
     const resultado = await pool.query(
-      'INSERT INTO tareas (nombre, descripcion, estado, fecha_limite, proyecto_nombre, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?)',
-      [nombre, descripcion, estado, fecha_limite, proyecto_nombre, date_create]
+      'INSERT INTO tareas (nombre, descripcion, estado, fecha_limite, proyecto_nombre) VALUES (?, ?, ?, ?, ?)',
+      [nombre, descripcion, estado, fecha_limite, proyecto_nombre]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -74,7 +73,7 @@ export const putTask = async (req, res) => {
       res.json({ resultado: 'Tarea no actualizada' });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message, resultado: 'Error al actualizar tarea' });
+    res.status 500).json({ error: error.message, resultado: 'Error al actualizar tarea' });
   }
 };
 
