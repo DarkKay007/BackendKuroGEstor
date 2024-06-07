@@ -26,9 +26,10 @@ export const getTask = async (req, res) => {
     const resultado = await pool.query('SELECT * FROM tareas WHERE nombre = ?', [nombre]);
     res.json(resultado[0]);
   } catch (error) {
-    res.status(500).json({ error: error.message, type: 'Error en la consulta Get de tarea' });
+    res.status(500).json({ error: error.message, type: 'Get' });
   }
 };
+
 
 export const postTask = async (req, res) => {
   const { nombre, descripcion, estado, fecha_limite, proyecto_nombre } = req.body;
@@ -52,7 +53,6 @@ export const postTask = async (req, res) => {
 
 export const putTask = async (req, res) => {
   const { nombre, descripcion, estado, fecha_limite, proyecto_nombre, nombreAntiguo } = req.body;
-  const date_update = getCurrentDateTime();
 
   try {
     const resultado = await pool.query(
@@ -61,10 +61,9 @@ export const putTask = async (req, res) => {
       descripcion = ?, 
       estado = ?, 
       fecha_limite = ?, 
-      proyecto_nombre = ?, 
-      fecha_actualizacion = ?
+      proyecto_nombre = ?
       WHERE nombre = ?`,
-      [nombre, descripcion, estado, fecha_limite, proyecto_nombre, date_update, nombreAntiguo]
+      [nombre, descripcion, estado, fecha_limite, proyecto_nombre, nombreAntiguo]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -73,7 +72,7 @@ export const putTask = async (req, res) => {
       res.json({ resultado: 'Tarea no actualizada' });
     }
   } catch (error) {
-    res.status 500).json({ error: error.message, resultado: 'Error al actualizar tarea' });
+    res.status(500).json({ error: error.message, resultado: 'Error al actualizar tarea' });
   }
 };
 
