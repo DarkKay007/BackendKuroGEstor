@@ -21,12 +21,12 @@ export const showReuniones = async (req, res) => {
 
 export const postReunion = async (req, res) => {
   const { nombre, descripcion, fecha_inicio, fecha_fin } = req.body;
-  const date_create = getCurrentDateTime(); // Asegúrate de que esta función devuelva la fecha y hora actual en el formato adecuado
+  const date_create = getCurrentDateTime();
 
   try {
     const resultado = await pool.query(
-      'INSERT INTO reuniones (nombre, descripcion, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?)',
-      [nombre, descripcion, fecha_inicio, fecha_fin]
+      'INSERT INTO reuniones (nombre, descripcion, fecha_inicio, fecha_fin, fecha_creacion) VALUES (?, ?, ?, ?, ?)',
+      [nombre, descripcion, fecha_inicio, fecha_fin, date_create]
     );
 
     if (resultado[0].affectedRows > 0) {
@@ -43,16 +43,18 @@ export const postReunion = async (req, res) => {
 export const putReunion = async (req, res) => {
   const { reunion_id } = req.params;
   const { nombre, descripcion, fecha_inicio, fecha_fin } = req.body;
+  const date_update = getCurrentDateTime();
 
   try {
     const resultado = await pool.query(
       `UPDATE reuniones SET 
-      nombre = ?,
-      descripcion =?,
+      nombre = ?, 
+      descripcion = ?, 
       fecha_inicio = ?, 
-      fecha_fin = ?
+      fecha_fin = ?, 
+      fecha_actualizacion = ?
       WHERE reunion_id = ?`,
-      [nombre, descripcion, fecha_inicio, fecha_fin, reunion_id]
+      [nombre, descripcion, fecha_inicio, fecha_fin, date_update, reunion_id]
     );
 
     if (resultado[0].affectedRows > 0) {
