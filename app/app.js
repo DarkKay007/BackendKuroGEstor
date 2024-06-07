@@ -5,7 +5,7 @@ const app = express();
 
 // Middleware para habilitar CORS con configuración específica
 
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['https://front-end-gestor-vercel.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
