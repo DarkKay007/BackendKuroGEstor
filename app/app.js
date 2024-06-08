@@ -4,17 +4,9 @@ import cors from 'cors';
 
 const app = express();
 
-const allowedOrigins = ['https://front-end-gestor-vercel.vercel.app'];
-
-// Configuración de CORS
+// Configuración de CORS para permitir todos los orígenes
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*',
   credentials: true,
   optionsSuccessStatus: 200  // Para navegadores antiguos que no manejan bien el 204
 };
@@ -27,10 +19,7 @@ app.options('*', cors(corsOptions));
 
 // Configurar encabezados para todas las respuestas
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -42,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/", routes);
 
-const PORT = process.env.PORT || 3000; // Changed fallback port to 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
