@@ -6,12 +6,12 @@ const app = express();
 
 // Middleware para habilitar CORS desde cualquier origen
 app.use(cors({
-  origin: 'https://front-end-gestor-vercel.vercel.app',  // Permitir cualquier origen
+  origin: '*',  // Permitir cualquier origen
   credentials: true
 }));
 
 // Middleware para manejar las solicitudes OPTIONS
-app.options('https://front-end-gestor-vercel.vercel.app', cors());
+app.options('*', cors());
 
 // Configurar encabezados para todas las respuestas
 app.use((req, res, next) => {
