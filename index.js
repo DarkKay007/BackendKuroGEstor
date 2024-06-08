@@ -8,5 +8,5 @@ let port = process.env.PORT;
 
   
 app.listen(port, ()=>{
-    console.log(`Server is running on port 666`);
+    console.log(`Server is running on {PORT}`);
 });
