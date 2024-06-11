@@ -4,25 +4,20 @@ import cors from 'cors';
 
 const app = express();
 
-// CORS configuration
-const corsOptions = {
-  origin: '*', // Specify the allowed origin
-  methods: 'GET,HEAD,OPTIONS,POST,PUT,DELETE',
-  credentials: true, // Allow credentials
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-};
+// Middleware para habilitar CORS desde cualquier origen
+app.use(cors({
+  origin: '*',  // Permitir cualquier origen
+  credentials: true
+}));
 
-// Apply CORS middleware
-app.use(cors(corsOptions));
+// Middleware para manejar las solicitudes OPTIONS
+app.options('*', cors());
 
-// Middleware to handle preflight requests
-app.options('*', cors(corsOptions));
-
-// Middleware to set headers for all responses
+// Configurar encabezados para todas las respuestas
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   next();
 });
@@ -30,5 +25,6 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", routes);
+
 
 export default app;
