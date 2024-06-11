@@ -6,7 +6,7 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin: 'https://kuro-gestor.vercel.app', // Specify the allowed origin
+  origin: '*', // Specify the allowed origin
   methods: 'GET,HEAD,OPTIONS,POST,PUT,DELETE',
   credentials: true, // Allow credentials
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
@@ -20,7 +20,7 @@ app.options('*', cors(corsOptions));
 
 // Middleware to set headers for all responses
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://kuro-gestor.vercel.app');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
