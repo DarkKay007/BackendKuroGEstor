@@ -1,21 +1,36 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import routes from './routes/index.js';
+import cors from 'cors';
+
 const app = express();
 
-// Configuración básica de CORS
-app.use(cors({
-  origin: 'https://kuro-gestor.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+const allowedOrigins = ['https://kuro-gestor.vercel.app'];
 
-// Otras configuraciones de tu servidor Express
-// ...
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
 
-// Rutas de tu API
-// ...
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
 });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/", routes);
+
+export default app;
