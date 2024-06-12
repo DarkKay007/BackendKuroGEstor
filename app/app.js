@@ -5,7 +5,13 @@ import cors from 'cors';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+
+// Allow requests from specific origins (replace 'https://kuro-gestor.vercel.app' with your actual frontend URL)
+const corsOptions = {
+  origin: 'https://kuro-gestor.vercel.app',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 // Define routes
 app.use("/", routes);
