@@ -1,6 +1,7 @@
 import { pool } from "../config/bd-mysql.js";
 import { tokenSign } from "../middlewares/usuarios.middlewares.js";
 import { getCurrentDateTime } from "../util/dateHelper.js";
+import bcrypt from 'bcrypt';
 
 // Listar todos los usuarios
 export const UserList = async (req, res) => {
@@ -11,6 +12,7 @@ export const UserList = async (req, res) => {
     res.json({ error: error.message, type: "Get" });
   }
 };
+
 // Obtener un usuario por ID
 export const getUser = async (req, res) => {
   const { nombre } = req.params;
@@ -39,16 +41,16 @@ export const getExistUser = async (req, res) => {
   }
 };
 
-
 // Registrar un nuevo usuario
 export const postUser = async (req, res) => {
   const { nombre, email, contrasena } = req.body;
-  const rol = "usuario"
+  const rol = "usuario";
 
   try {
+    const hashedPassword = await bcrypt.hash(contrasena, 10);
     const [resultado] = await pool.query(
       "INSERT INTO usuarios (nombre, email, contrasena, rol) VALUES (?, ?, ?, ?)",
-      [nombre, email, contrasena, rol]
+      [nombre, email, hashedPassword, rol]
     );
 
     if (resultado.affectedRows > 0) {
@@ -64,12 +66,12 @@ export const postUser = async (req, res) => {
 // Actualizar un usuario existente
 export const putUser = async (req, res) => {
   const { usuario_id, nombre, email, contrasena, rol_id } = req.body;
-  const date_create = getCurrentDateTime();
 
   try {
+    const hashedPassword = await bcrypt.hash(contrasena, 10);
     const [resultado] = await pool.query(
       "UPDATE usuarios SET nombre = ?, email = ?, contrasena = ?, rol_id = ? WHERE usuario_id = ?",
-      [nombre, email, contrasena, rol_id, usuario_id]
+      [nombre, email, hashedPassword, rol_id, usuario_id]
     );
 
     if (resultado.affectedRows > 0) {
@@ -140,10 +142,10 @@ export const loginUser = async (req, res) => {
   const { email, contrasena } = req.body;
 
   try {
-    const [resultado] = await pool.query("SELECT * FROM usuarios WHERE email = ? AND contrasena = ?", [email, contrasena]);
+    const [resultado] = await pool.query("SELECT * FROM usuarios WHERE email = ?", [email]);
     const usuario = resultado[0];
 
-    if (!usuario) {
+    if (!usuario || !(await bcrypt.compare(contrasena, usuario.contrasena))) {
       return res.status(401).json({ respuesta: "Usuario o contrasena incorrecto", estado: false });
     }
 
