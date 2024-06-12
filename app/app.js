@@ -1,19 +1,31 @@
 import express from 'express';
 import routes from './routes/index.js';
-import cors from 'cors';
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Allow requests from specific origins (replace 'https://kuro-gestor.vercel.app' with your actual frontend URL)
-const corsOptions = {
-  origin: 'https://kuro-gestor.vercel.app',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
+// Middleware personalizado para manejar CORS
+app.use((req, res, next) => {
+  // Permitir solicitudes desde cualquier origen
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Permitir los métodos de solicitud que se utilizarán
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  // Permitir ciertos encabezados personalizados
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  // Permitir que el navegador envíe cookies en la solicitud
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  
+  // Si es una solicitud OPTIONS, enviar una respuesta exitosa inmediatamente
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
 
-// Define routes
+  // Pasar al siguiente middleware
+  next();
+});
+
+// Define rutas
 app.use("/", routes);
 
 export default app;
