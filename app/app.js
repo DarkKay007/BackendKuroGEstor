@@ -6,12 +6,11 @@ const app = express();
 
 const corsOptions = {
   origin: 'https://kuro-gestor.vercel.app',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  optionsSuccessStatus: 200 // algunos clientes pueden tener problemas con 204
 };
 
-app.use(cors(corsOptions)); // Usar el middleware de CORS antes de cualquier otra cosa
+// Aplicar el middleware de CORS antes de cualquier otra cosa
+app.use(cors(corsOptions));
 
 // Middleware para parsear JSON y URL-encoded data
 app.use(express.json());
