@@ -2,12 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-// Importaciones de las rutas
-import routerUsers from './routes/usuarios.routes.js';
-import routerProjects from './routes/proyectos.routes.js';
-import routerTasks from './routes/tareas.routes.js';
-import routerMeeting from './routes/reuniones.routes.js';
-
 const app = express();
 
 // Middleware para parsear JSON y URL-encoded data
@@ -29,10 +23,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Aplicar middleware de CORS a las rutas específicas
-app.use('/api/tasks', cors(corsOptions), routerTasks);
-app.use('/api/meetings', cors(corsOptions), routerMeeting);
-app.use('/api/users', cors(corsOptions), routerUsers);
-app.use('/api/projects', cors(corsOptions), routerProjects);
 
 // Manejo de solicitudes preflight (OPTIONS)
 app.options('*', cors(corsOptions));
