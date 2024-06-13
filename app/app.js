@@ -3,10 +3,10 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // Importaciones de las rutas
-import routerUsers from './usuarios.routes.js';
-import routerProjects from './proyectos.routes.js';
-import routerTasks from './tareas.routes.js';
-import routerMeeting from './reuniones.routes.js';
+import routerUsers from './routes/usuarios.routes.js';
+import routerProjects from './routes/proyectos.routes.js';
+import routerTasks from './routes/tareas.routes.js';
+import routerMeeting from './routes/reuniones.routes.js';
 
 const app = express();
 
