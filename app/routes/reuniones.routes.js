@@ -5,9 +5,9 @@ import { delReunion, postReunion, putReunion, showReuniones } from '../controlle
 const routerMeeting = Router();
 
 
-routerMeeting.get("/meetings", validarPermiso, showReuniones);
-routerMeeting.post("/meeting", validarPermiso, postReunion);
-routerMeeting.put("/meeting/:reunion_id", validarPermiso, putReunion);
-routerMeeting.delete("/meeting/:reunion_id", validarPermiso, delReunion);
+routerMeeting.get("/meetings", showReuniones);
+routerMeeting.post("/meeting", postReunion);
+routerMeeting.put("/meeting/:reunion_id", putReunion);
+routerMeeting.delete("/meeting/:reunion_id", delReunion);
 
 export default routerMeeting;
