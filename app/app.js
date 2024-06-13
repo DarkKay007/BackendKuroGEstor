@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'https://kuro-gestor-iheilkmqv-darkkay007s-projects.vercel.app',
+  origin: 'https://kuro-gestor.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
