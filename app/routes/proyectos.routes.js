@@ -4,10 +4,10 @@ import { delProject, getProject, postProject, putProject, showProject } from "..
 
 const routerProjects = Router();
 
-routerProjects.get("/proyectos",validarPermiso ,  showProject);
-routerProjects.get("/proyecto/:nombre",validarPermiso ,  getProject);
-routerProjects.post("/proyecto",validarPermiso ,  postProject);
-routerProjects.put("/proyecto",validarPermiso ,  putProject);
-routerProjects.delete("/proyecto/:nombre",validarPermiso ,   delProject);
+routerProjects.get("/proyectos",   showProject);
+routerProjects.get("/proyecto/:nombre" ,  getProject);
+routerProjects.post("/proyecto" ,  postProject);
+routerProjects.put("/proyecto" ,  putProject);
+routerProjects.delete("/proyecto/:nombre" ,   delProject);
 
 export default routerProjects;
