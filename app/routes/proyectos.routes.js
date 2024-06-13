@@ -8,7 +8,9 @@ const corsOptions = {
   origin: 'https://kuro-gestor.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Access-Control-Allow-Origin'],
+  preflightContinue: true
 };
 routerProjects.get("/proyectos", cors(corsOptions),validarPermiso ,  showProject);
 routerProjects.get("/proyecto/:nombre", cors(corsOptions),validarPermiso ,  getProject);
