@@ -77,3 +77,12 @@ export const delReunion = async (req, res) => {
     res.status(500).json({ error: error.message, resultado: 'Error al eliminar reunión' });
   }
 };
+export const showAllMeetings = async (req, res) => {
+  try {
+    const reuniones = await pool.query('SELECT * FROM reuniones');
+    res.json(reuniones);
+  } catch (error) {
+    console.error('Error fetching meetings:', error);
+    res.status(500).json({ error: error.message, resultado: 'Error en la consulta Get de reuniones' });
+  }
+};
