@@ -4,23 +4,14 @@ import cors from 'cors';
 
 const app = express();
 
-const allowedOrigins = ['https://kuro-gestor.vercel.app'];
-
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, // Allow credentials
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow these methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+  origin: 'https://kuro-gestor.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight requests
 
 // Middleware
 app.use(express.json());
