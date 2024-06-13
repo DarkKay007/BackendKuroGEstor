@@ -12,8 +12,7 @@ const corsOptions = {
   exposedHeaders: ['Access-Control-Allow-Origin'],
   preflightContinue: true
 };
-
-
+app.options('*', cors())
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://kuro-gestor.vercel.app");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
