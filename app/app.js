@@ -11,7 +11,11 @@ const corsOptions = {
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-
+app.use(function (request, response, next) {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use(cors(corsOptions)); // Usar el middleware de CORS antes de cualquier otra cosa
 
 // Middleware para parsear JSON y URL-encoded data
