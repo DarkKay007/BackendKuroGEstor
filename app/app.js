@@ -1,15 +1,17 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import routes from './routes/index.js';
+import cors from 'cors';
 
 const app = express();
 
 const corsOptions = {
   origin: 'https://kuro-gestor.vercel.app',
-  optionsSuccessStatus: 200 // algunos clientes pueden tener problemas con 204
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
-// Aplicar el middleware de CORS antes de cualquier otra cosa
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Usar el middleware de CORS antes de cualquier otra cosa
 
 // Middleware para parsear JSON y URL-encoded data
 app.use(express.json());
@@ -27,4 +29,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-export const app;
+export default app;
