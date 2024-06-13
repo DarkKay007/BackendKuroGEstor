@@ -5,7 +5,7 @@ import cors from 'cors';
 const app = express();
 
 const corsOptions = {
-  origin: 'https://kuro-gestor.vercel.app',
+  origin: 'hhttps://kuro-gestor-iheilkmqv-darkkay007s-projects.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -14,7 +14,7 @@ const corsOptions = {
 };
 app.options('*', cors())
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://kuro-gestor.vercel.app");
+  res.header("Access-Control-Allow-Origin", "https://kuro-gestor-iheilkmqv-darkkay007s-projects.vercel.app");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
