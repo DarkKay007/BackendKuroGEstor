@@ -1,13 +1,19 @@
 import { Router } from "express";
 import { validarPermiso } from "../middlewares/usuarios.middlewares.js";
 import { delProject, getProject, postProject, putProject, showProject } from "../controllers/proyectos.controllers.js";
+import cors from 'cors';
 
 const routerProjects = Router();
-
-routerProjects.get("/proyectos",validarPermiso ,  showProject);
-routerProjects.get("/proyecto/:nombre",validarPermiso ,  getProject);
-routerProjects.post("/proyecto",validarPermiso ,  postProject);
-routerProjects.put("/proyecto",validarPermiso ,  putProject);
-routerProjects.delete("/proyecto/:nombre",validarPermiso ,   delProject);
+const corsOptions = {
+  origin: 'https://kuro-gestor.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+routerProjects.get("/proyectos", cors(corsOptions),validarPermiso ,  showProject);
+routerProjects.get("/proyecto/:nombre", cors(corsOptions),validarPermiso ,  getProject);
+routerProjects.post("/proyecto", cors(corsOptions),validarPermiso ,  postProject);
+routerProjects.put("/proyecto", cors(corsOptions),validarPermiso ,  putProject);
+routerProjects.delete("/proyecto/:nombre", cors(corsOptions),validarPermiso ,   delProject);
 
 export default routerProjects;
