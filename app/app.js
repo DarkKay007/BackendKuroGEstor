@@ -25,7 +25,7 @@ app.use('/', routes);
 app.options('*', cors(corsOptions));
 
 // Iniciar el servidor
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000; // Usar el puerto proporcionado por Render o el puerto 5000 como fallback
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
