@@ -4,31 +4,27 @@ import cors from 'cors';
 
 const app = express();
 
+// Configuración de CORS
 const corsOptions = {
   origin: 'https://kuro-gestor.vercel.app',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-  app.use(function (req, res, next) {
-    //Enabling CORS
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, 
-    Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-      next();
-    });
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Usar el middleware de CORS antes de cualquier otra cosa
 
-// Middleware
+// Middleware para parsear JSON y URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
-app.use("/", routes);
+// Rutas de tu aplicación
+app.use('/', routes);
 
-// Start the server
+// Manejo de solicitudes preflight (OPTIONS)
+app.options('*', cors(corsOptions));
+
+// Iniciar el servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
