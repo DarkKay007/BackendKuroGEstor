@@ -41,23 +41,26 @@ export const putReunion = async (req, res) => {
   const { reunion_id } = req.params;
   const { nombre, descripcion, fecha_inicio, fecha_fin } = req.body;
 
+  console.log(`Datos recibidos para actualizar reunión ${reunion_id}:`, { nombre, descripcion, fecha_inicio, fecha_fin });
+
   try {
     const resultado = await pool.query(
       `UPDATE reuniones SET 
       nombre = ?, 
       descripcion = ?, 
       fecha_inicio = ?, 
-      fecha_fin = ?, 
+      fecha_fin = ? 
       WHERE reunion_id = ?`,
-      [nombre, descripcion, fecha_inicio, fecha_fin, date_update, reunion_id]
+      [nombre, descripcion, fecha_inicio, fecha_fin, reunion_id]
     );
 
-    if (resultado.affectedRows > 0) { // Aquí también no es resultado[0].affectedRows sino que es resultado.affectedRows
+    if (resultado.affectedRows > 0) {
       res.json({ resultado: 'Reunión actualizada exitosamente' });
     } else {
       res.json({ resultado: 'Reunión no actualizada' });
     }
   } catch (error) {
+    console.error('Error al actualizar reunión:', error);
     res.status(500).json({ error: error.message, resultado: 'Error al actualizar reunión' });
   }
 };
