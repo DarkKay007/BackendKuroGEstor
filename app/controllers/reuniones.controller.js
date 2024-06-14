@@ -27,7 +27,7 @@ export const postReunion = async (req, res) => {
       [nombre, descripcion, fecha_inicio, fecha_fin] // Aquí hay un error, debería ser solo cuatro signos de interrogación ya que son cuatro los datos en inserción
     );
 
-    if (resultado.affectedRows > 0) { // Aquí no es [0].affectedRows sino que es resultado.affectedRows
+    if (resultado[0].affectedRows > 0) { // Aquí no es [0].affectedRows sino que es resultado.affectedRows
       res.json({ resultado: 'Reunión creada exitosamente' });
     } else {
       res.json({ resultado: 'Reunión no creada' });
@@ -54,7 +54,7 @@ export const putReunion = async (req, res) => {
       [nombre, descripcion, fecha_inicio, fecha_fin, reunion_id]
     );
 
-    if (resultado.affectedRows > 0) {
+    if (resultado[0].affectedRows > 0) {
       res.json({ resultado: 'Reunión actualizada exitosamente' });
     } else {
       res.json({ resultado: 'Reunión no actualizada' });
